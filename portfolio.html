@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品集 | 叶铭轩 - 视觉设计师</title>
+    <meta name="description" content="叶铭轩作品集 - UI设计、VI设计、品牌设计、包装设计、插画设计、AI绘画">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* 额外的炫酷效果 */
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 背景粒子效果 */
+        .particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: particleFloat 15s infinite;
+        }
+        
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        /* 导航栏悬浮时增强效果 */
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.95) !important;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        [data-theme="light"] .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95) !important;
+        }
+        
+        /* 首页Hero动画 */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-name {
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 5s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* 技能卡片3D翻转效果 */
+        .skill-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .skill-card:hover {
+            transform: rotateY(10deg) rotateX(10deg);
+        }
+        
+        /* 作品卡片悬停光效 */
+        .portfolio-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(141, 111, 246, 0.15) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity var(--transition-base);
+            pointer-events: none;
+        }
+        
+        .portfolio-item:hover::after {
+            opacity: 1;
+        }
+        
+        /* 数字滚动动画 */
+        .stat-number {
+            display: inline-block;
+        }
+        
+        /* 页面加载进度条 */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+        
+        /* 滚动指示器增强 */
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        /* 按钮悬停光晕 */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* 筛选按钮点击波纹 */
+        .filter-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.5s ease;
+        }
+        
+        .filter-btn:active::after {
+            transform: scale(2);
+        }
+        
+        /* 灯箱增强 */
+        .lightbox-image {
+            animation: lightboxZoomIn 0.3s ease;
+        }
+        
+        @keyframes lightboxZoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        /* 卡片悬停时的3D倾斜效果 */
+        .portfolio-item {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+        
+        /* 分类标签动画 */
+        .filter-btn.active::before {
+            content: '';
+        }
+        
+        /* 移动端菜单增强 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                padding: 20px;
+            }
+            
+            .nav-link {
+                font-size: 24px;
+                padding: 15px 0;
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面加载进度条 -->
+    <div class="page-loader" id="pageLoader"></div>
+
+    <!-- 导航 -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">YX.</a>
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">首页</a>
+                <a href="about.html" class="nav-link">关于</a>
+                <a href="portfolio.html" class="nav-link active">作品集</a>
+                <a href="resume.html" class="nav-link">简历</a>
+                <a href="contact.html" class="nav-link">联系</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="menu-toggle" id="menuToggle" aria-label="菜单">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-aos="fade-up">作品集</h1>
+            <p data-aos="fade-up" data-aos-delay="100">UI设计 · 品牌视觉 · 包装设计 · 插画创作</p>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section">
+        <div class="container">
+            <!-- 分类筛选 -->
+            <div class="portfolio-filters" data-aos="fade-up">
+<button class="filter-btn active" data-filter="all">全部</button>
+<button class="filter-btn" data-filter="ui">UI设计</button>
+<button class="filter-btn" data-filter="vi">VI设计</button>
+<button class="filter-btn" data-filter="ecommerce">电商设计</button>
+<button class="filter-btn" data-filter="poster">海报设计</button>
+<button class="filter-btn" data-filter="web">网页设计</button>
+<button class="filter-btn" data-filter="packaging">包装设计</button>
+<button class="filter-btn" data-filter="ai-art">AI插画设计</button>
+            </div>
+            
+            <!-- 作品网格 - Masonry瀑布流布局 -->
+            <div class="portfolio-grid">
+                <!-- 心色调 UI (6-11) -->
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/heartset/image6.jpg" alt="心色调APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">心色调 1</h3>
+                    </div>
+                    <span class="portfolio-number">01</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/heartset/image7.jpg" alt="心色调APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">心色调 2</h3>
+                    </div>
+                    <span class="portfolio-number">02</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/heartset/image8.jpg" alt="心色调APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">心色调 3</h3>
+                    </div>
+                    <span class="portfolio-number">03</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/heartset/image9.jpg" alt="心色调APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">心色调 4</h3>
+                    </div>
+                    <span class="portfolio-number">04</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/heartset/image10.jpg" alt="心色调APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">心色调 5</h3>
+                    </div>
+                    <span class="portfolio-number">05</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/heartset/image11.jpg" alt="心色调APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">心色调 6</h3>
+                    </div>
+                    <span class="portfolio-number">06</span>
+                </div>
+                
+                <!-- 智考 UI (13-23) -->
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/zhikao/image13.jpg" alt="智考APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">智考 1</h3>
+                    </div>
+                    <span class="portfolio-number">07</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/zhikao/image14.jpg" alt="智考APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">智考 2</h3>
+                    </div>
+                    <span class="portfolio-number">08</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/zhikao/image15.jpg" alt="智考APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">智考 3</h3>
+                    </div>
+                    <span class="portfolio-number">09</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/zhikao/image16.jpg" alt="智考APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">智考 4</h3>
+                    </div>
+                    <span class="portfolio-number">10</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/zhikao/image17.jpg" alt="智考APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">智考 5</h3>
+                    </div>
+                    <span class="portfolio-number">11</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/zhikao/image18.jpg" alt="智考APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">智考 6</h3>
+                    </div>
+                    <span class="portfolio-number">12</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/zhikao/image19.jpg" alt="智考APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">智考 7</h3>
+                    </div>
+                    <span class="portfolio-number">13</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/zhikao/image20.jpg" alt="智考APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">智考 8</h3>
+                    </div>
+                    <span class="portfolio-number">14</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/zhikao/image21.jpg" alt="智考APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">智考 9</h3>
+                    </div>
+                    <span class="portfolio-number">15</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/zhikao/image22.jpg" alt="智考APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">智考 10</h3>
+                    </div>
+                    <span class="portfolio-number">16</span>
+                </div>
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up">
+                    <img src="assets/images/ui/zhikao/image23.jpg" alt="智考APP">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">UI设计</span>
+                        <h3 class="portfolio-title">智考 11</h3>
+                    </div>
+                    <span class="portfolio-number">17</span>
+                </div>
+                
+                <!-- 求知 VI (24-33) -->
+                <div class="portfolio-item" data-category="vi" data-aos="fade-up">
+                    <img src="assets/images/vi/qiuzhi/image24.jpg" alt="求知VI">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">VI设计</span>
+                        <h3 class="portfolio-title">求知 1</h3>
+                    </div>
+                    <span class="portfolio-number">18</span>
+                </div>
+                <div class="portfolio-item" data-category="vi" data-aos="fade-up">
+                    <img src="assets/images/vi/qiuzhi/image25.jpg" alt="求知VI">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">VI设计</span>
+                        <h3 class="portfolio-title">求知 2</h3>
+                    </div>
+                    <span class="portfolio-number">19</span>
+                </div>
+                <div class="portfolio-item" data-category="vi" data-aos="fade-up">
+                    <img src="assets/images/vi/qiuzhi/image26.jpg" alt="求知VI">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">VI设计</span>
+                        <h3 class="portfolio-title">求知 3</h3>
+                    </div>
+                    <span class="portfolio-number">20</span>
+                </div>
+                <div class="portfolio-item" data-category="vi" data-aos="fade-up">
+                    <img src="assets/images/vi/qiuzhi/image27.jpg" alt="求知VI">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">VI设计</span>
+                        <h3 class="portfolio-title">求知 4</h3>
+                    </div>
+                    <span class="portfolio-number">21</span>
+                </div>
+                <div class="portfolio-item" data-category="vi" data-aos="fade-up">
+                    <img src="assets/images/vi/qiuzhi/image28.jpg" alt="求知VI">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">VI设计</span>
+                        <h3 class="portfolio-title">求知 5</h3>
+                    </div>
+                    <span class="portfolio-number">22</span>
+                </div>
+                <div class="portfolio-item" data-category="vi" data-aos="fade-up">
+                    <img src="assets/images/vi/qiuzhi/image29.jpg" alt="求知VI">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">VI设计</span>
+                        <h3 class="portfolio-title">求知 6</h3>
+                    </div>
+                    <span class="portfolio-number">23</span>
+                </div>
+                <div class="portfolio-item" data-category="vi" data-aos="fade-up">
+                    <img src="assets/images/vi/qiuzhi/image30.jpg" alt="求知VI">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">VI设计</span>
+                        <h3 class="portfolio-title">求知 7</h3>
+                    </div>
+                    <span class="portfolio-number">24</span>
+                </div>
+                <div class="portfolio-item" data-category="vi" data-aos="fade-up">
+                    <img src="assets/images/vi/qiuzhi/image31.jpg" alt="求知VI">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">VI设计</span>
+                        <h3 class="portfolio-title">求知 8</h3>
+                    </div>
+                    <span class="portfolio-number">25</span>
+                </div>
+                <div class="portfolio-item" data-category="vi" data-aos="fade-up">
+                    <img src="assets/images/vi/qiuzhi/image32.jpg" alt="求知VI">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">VI设计</span>
+                        <h3 class="portfolio-title">求知 9</h3>
+                    </div>
+                    <span class="portfolio-number">26</span>
+                </div>
+                <div class="portfolio-item" data-category="vi" data-aos="fade-up">
+                    <img src="assets/images/vi/qiuzhi/image33.jpg" alt="求知VI">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">VI设计</span>
+                        <h3 class="portfolio-title">求知 10</h3>
+                    </div>
+                    <span class="portfolio-number">27</span>
+                </div>
+                
+                <!-- 电商设计 (43-48) -->
+                <div class="portfolio-item" data-category="ecommerce" data-aos="fade-up">
+                    <img src="assets/images/illustration/ecommerce/image43.jpg" alt="电商设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">电商设计</span>
+                        <h3 class="portfolio-title">电商设计 1</h3>
+                    </div>
+                    <span class="portfolio-number">28</span>
+                </div>
+                <div class="portfolio-item" data-category="ecommerce" data-aos="fade-up">
+                    <img src="assets/images/illustration/ecommerce/image44.jpg" alt="电商设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">电商设计</span>
+                        <h3 class="portfolio-title">电商设计 2</h3>
+                    </div>
+                    <span class="portfolio-number">29</span>
+                </div>
+                <div class="portfolio-item" data-category="ecommerce" data-aos="fade-up">
+                    <img src="assets/images/illustration/ecommerce/image45.jpg" alt="电商设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">电商设计</span>
+                        <h3 class="portfolio-title">电商设计 3</h3>
+                    </div>
+                    <span class="portfolio-number">30</span>
+                </div>
+                <div class="portfolio-item" data-category="ecommerce" data-aos="fade-up">
+                    <img src="assets/images/illustration/ecommerce/image46.jpg" alt="电商设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">电商设计</span>
+                        <h3 class="portfolio-title">电商设计 4</h3>
+                    </div>
+                    <span class="portfolio-number">31</span>
+                </div>
+                <div class="portfolio-item" data-category="ecommerce" data-aos="fade-up">
+                    <img src="assets/images/illustration/ecommerce/image47.jpg" alt="电商设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">电商设计</span>
+                        <h3 class="portfolio-title">电商设计 5</h3>
+                    </div>
+                    <span class="portfolio-number">32</span>
+                </div>
+                <div class="portfolio-item" data-category="ecommerce" data-aos="fade-up">
+                    <img src="assets/images/illustration/ecommerce/image48.jpg" alt="电商设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">电商设计</span>
+                        <h3 class="portfolio-title">电商设计 6</h3>
+                    </div>
+                    <span class="portfolio-number">33</span>
+                </div>
+                
+                <!-- 海报设计 (39-42) -->
+                <div class="portfolio-item" data-category="poster" data-aos="fade-up">
+                    <img src="assets/images/illustration/poster/image39.jpg" alt="海报设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">海报设计</span>
+                        <h3 class="portfolio-title">海报设计 1</h3>
+                    </div>
+                    <span class="portfolio-number">34</span>
+                </div>
+                <div class="portfolio-item" data-category="poster" data-aos="fade-up">
+                    <img src="assets/images/illustration/poster/image40.jpg" alt="海报设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">海报设计</span>
+                        <h3 class="portfolio-title">海报设计 2</h3>
+                    </div>
+                    <span class="portfolio-number">35</span>
+                </div>
+                <div class="portfolio-item" data-category="poster" data-aos="fade-up">
+                    <img src="assets/images/illustration/poster/image41.jpg" alt="海报设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">海报设计</span>
+                        <h3 class="portfolio-title">海报设计 3</h3>
+                    </div>
+                    <span class="portfolio-number">36</span>
+                </div>
+                <div class="portfolio-item" data-category="poster" data-aos="fade-up">
+                    <img src="assets/images/illustration/poster/image42.jpg" alt="海报设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">海报设计</span>
+                        <h3 class="portfolio-title">海报设计 4</h3>
+                    </div>
+                    <span class="portfolio-number">37</span>
+                </div>
+                
+                <!-- 网页设计 (36-38) -->
+                <div class="portfolio-item" data-category="web" data-aos="fade-up">
+                    <img src="assets/images/web/image36.jpg" alt="网页设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">网页设计</span>
+                        <h3 class="portfolio-title">网页设计 1</h3>
+                    </div>
+                    <span class="portfolio-number">38</span>
+                </div>
+                <div class="portfolio-item" data-category="web" data-aos="fade-up">
+                    <img src="assets/images/web/image37.jpg" alt="网页设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">网页设计</span>
+                        <h3 class="portfolio-title">网页设计 2</h3>
+                    </div>
+                    <span class="portfolio-number">39</span>
+                </div>
+                <div class="portfolio-item" data-category="web" data-aos="fade-up">
+                    <img src="assets/images/web/image38.jpg" alt="网页设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">网页设计</span>
+                        <h3 class="portfolio-title">网页设计 3</h3>
+                    </div>
+                    <span class="portfolio-number">40</span>
+                </div>
+                
+                <!-- 包装设计 (34-35) -->
+                <div class="portfolio-item" data-category="packaging" data-aos="fade-up">
+                    <img src="assets/images/packaging/image34.jpg" alt="包装设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">包装设计</span>
+                        <h3 class="portfolio-title">包装设计 1</h3>
+                    </div>
+                    <span class="portfolio-number">41</span>
+                </div>
+                <div class="portfolio-item" data-category="packaging" data-aos="fade-up">
+                    <img src="assets/images/packaging/image35.jpg" alt="包装设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">包装设计</span>
+                        <h3 class="portfolio-title">包装设计 2</h3>
+                    </div>
+                    <span class="portfolio-number">42</span>
+                </div>
+                
+                <!-- AI插画设计 (49-55) -->
+                <div class="portfolio-item" data-category="ai-art" data-aos="fade-up">
+                    <img src="assets/images/ai-art/image49.jpg" alt="AI插画设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">AI插画设计</span>
+                        <h3 class="portfolio-title">AI插画 1</h3>
+                    </div>
+                    <span class="portfolio-number">43</span>
+                </div>
+                <div class="portfolio-item" data-category="ai-art" data-aos="fade-up">
+                    <img src="assets/images/ai-art/image50.jpg" alt="AI插画设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">AI插画设计</span>
+                        <h3 class="portfolio-title">AI插画 2</h3>
+                    </div>
+                    <span class="portfolio-number">44</span>
+                </div>
+                <div class="portfolio-item" data-category="ai-art" data-aos="fade-up">
+                    <img src="assets/images/ai-art/image51.jpg" alt="AI插画设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">AI插画设计</span>
+                        <h3 class="portfolio-title">AI插画 3</h3>
+                    </div>
+                    <span class="portfolio-number">45</span>
+                </div>
+                <div class="portfolio-item" data-category="ai-art" data-aos="fade-up">
+                    <img src="assets/images/ai-art/image52.jpg" alt="AI插画设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">AI插画设计</span>
+                        <h3 class="portfolio-title">AI插画 4</h3>
+                    </div>
+                    <span class="portfolio-number">46</span>
+                </div>
+                <div class="portfolio-item" data-category="ai-art" data-aos="fade-up">
+                    <img src="assets/images/ai-art/image53.jpg" alt="AI插画设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">AI插画设计</span>
+                        <h3 class="portfolio-title">AI插画 5</h3>
+                    </div>
+                    <span class="portfolio-number">47</span>
+                </div>
+                <div class="portfolio-item" data-category="ai-art" data-aos="fade-up">
+                    <img src="assets/images/ai-art/image54.jpg" alt="AI插画设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">AI插画设计</span>
+                        <h3 class="portfolio-title">AI插画 6</h3>
+                    </div>
+                    <span class="portfolio-number">48</span>
+                </div>
+                <div class="portfolio-item" data-category="ai-art" data-aos="fade-up">
+                    <img src="assets/images/ai-art/image55.jpg" alt="AI插画设计">
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-category">AI插画设计</span>
+                        <h3 class="portfolio-title">AI插画 7</h3>
+                    </div>
+                    <span class="portfolio-number">49</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 增强版灯箱 -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" aria-label="关闭">&times;</button>
+        <button class="lightbox-nav lightbox-prev" aria-label="上一张">&#8249;</button>
+        <button class="lightbox-nav lightbox-next" aria-label="下一张">&#8250;</button>
+        <div class="lightbox-content">
+            <img class="lightbox-image" src="" alt="">
+            <div class="lightbox-info">
+                <h3 class="lightbox-title"></h3>
+                <p class="lightbox-category"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+            <a href="index.html" class="logo">YX.</a>
+                    <p>用设计讲述故事</p>
+                </div>
+                <div class="footer-links">
+                    <a href="about.html">关于</a>
+                    <a href="portfolio.html">作品集</a>
+                    <a href="resume.html">简历</a>
+                    <a href="contact.html">联系</a>
+                </div>
+                <div class="footer-social">
+                    <a href="mailto:1812546463@qq.com" aria-label="邮箱">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                    <a href="tel:17706133862" aria-label="电话">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 叶铭轩. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // 页面加载进度条
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('pageLoader');
+            loader.style.width = '100%';
+            setTimeout(() => {
+                loader.style.opacity = '0';
+            }, 500);
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // 卡片悬停光效
+        document.querySelectorAll('.portfolio-item').forEach(item => {
+            item.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                this.style.setProperty('--mouse-x', x + '%');
+                this.style.setProperty('--mouse-y', y + '%');
+            });
+        });
+    </script>
+</body>
+</html>
