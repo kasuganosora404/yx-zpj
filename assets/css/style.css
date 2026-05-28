@@ -1258,7 +1258,7 @@ a.featured-item:hover {
    Page Header (通用页面头部)
    ======================================== */
 .page-header {
-    padding: 160px 0 80px;
+    padding: 100px 0 50px;
     text-align: center;
     position: relative;
     background: 
@@ -1278,107 +1278,148 @@ a.featured-item:hover {
 }
 
 /* ========================================
-   About Page
+   About Page - Clean & Simple
    ======================================== */
-.about-section {
-    padding: 80px 0;
+
+/* Page Header - reduced */
+.page-header {
+    padding: 100px 0 50px;
 }
 
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 60px;
-    align-items: start;
+/* Intro */
+.about-intro-section {
+    padding: 0 0 40px;
 }
 
-.about-image {
-    position: relative;
-    aspect-ratio: 3/4;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    background: var(--bg-card);
+.about-intro-body {
+    max-width: 640px;
+    margin: 0 auto;
 }
 
-.about-image::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 2px solid var(--accent);
-    border-radius: var(--radius-lg);
-    transform: translate(20px, 20px);
-    z-index: -1;
-}
-
-.about-image-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-tertiary);
-    color: var(--text-muted);
-    font-size: 14px;
-}
-
-.about-content h2 {
+.about-label {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
     margin-bottom: 24px;
 }
 
-.about-content p {
+.about-desc {
+    font-size: 16px;
+    line-height: 2;
+    color: var(--text-secondary);
     margin-bottom: 20px;
-    line-height: 1.8;
 }
 
-.about-quote {
-    padding: 24px;
-    background: var(--bg-card);
-    border-left: 4px solid var(--accent);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    margin: 30px 0;
+.about-desc:last-child {
+    margin-bottom: 0;
 }
 
-.about-quote p {
+/* Quote */
+.about-quote-section {
+    padding: 0 0 40px;
+}
+
+.about-blockquote {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 32px 40px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.about-blockquote p {
     font-size: 18px;
     font-style: italic;
-    margin-bottom: 0;
+    line-height: 1.6;
     color: var(--text-primary);
 }
 
-.education-item {
-    padding: 20px 0;
-    border-bottom: 1px solid var(--border-color);
+/* Details - Education & Skills */
+.about-detail-section {
+    padding: 0 0 100px;
 }
 
-.education-item:last-child {
-    border-bottom: none;
+.about-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 640px;
+    margin: 0 auto;
 }
 
-.education-year {
-    font-size: 14px;
+.about-detail-title {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 4px;
+    margin-bottom: 20px;
 }
 
-.education-school {
-    font-size: 18px;
+.about-edu-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.about-edu-date {
+    font-size: 13px;
+    color: var(--accent);
+}
+
+.about-edu-school {
+    font-size: 16px;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 4px;
 }
 
-.education-major {
-    font-size: 15px;
+.about-edu-major {
+    font-size: 14px;
     color: var(--text-secondary);
 }
 
-@media (max-width: 968px) {
-    .about-grid {
+.about-skills-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.about-skill {
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.about-skill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .about-detail-grid {
         grid-template-columns: 1fr;
+        gap: 32px;
     }
-    
-    .about-image {
-        max-width: 400px;
-        margin: 0 auto;
+
+    .about-blockquote {
+        padding: 24px 20px;
+    }
+
+    .about-intro-section,
+    .about-quote-section {
+        padding: 0 0 32px;
+    }
+
+    .about-detail-section {
+        padding: 0 0 60px;
     }
 }
 
